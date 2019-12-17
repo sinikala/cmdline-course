@@ -2,8 +2,9 @@ BOOKS=ulysses alice christmas_carol dracula frankenstein heart_of_darkness life_
 
 FREQLISTS=$(BOOKS:%=results/%.freq.txt)
 SENTEDBOOKS=$(BOOKS:%=results/%.sent.txt)
+PARSEDBOOKS=$(BOOKS:%=results/%.parsed.txt)
 
-all: $(FREQLISTS) $(SENTEDBOOKS)
+all: $(FREQLISTS) $(SENTEDBOOKS) $(PARSEDBOOKS)
 
 clean:
 	rm -f results/* data/*no_md.txt
@@ -16,3 +17,6 @@ results/%.freq.txt: data/%.no_md.txt
 
 results/%.sent.txt: data/%.no_md.txt
 	src/sent_per_line.sh $< $@
+
+results/%.parsed.txt: results/%.sent.txt
+	cat $< > $@
